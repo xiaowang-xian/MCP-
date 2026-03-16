@@ -1,0 +1,36 @@
+---
+- name: Install Docker Engine on all nodes
+  hosts: all  # 这个play将会在inventory中的所有主机上运行
+  become: true # 使用sudo权限执行任务
+  tasks:
+    - name: Ensure required packages for adding repo are installed
+      # 使用dnf模块确保dnf-utils存在
+      ansible.builtin.dnf:
+        name: dnf-utils
+        state: present
+
+    - name: Add Docker CE repository
+      # 使用get_url模块下载repo文件，这是幂等的
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+        mode: '0644'
+
+    - name: Install Docker packages
+      # 使用dnf模块安装docker-ce, docker-ce-cli, 和 containerd.io
+      # 我们也把containerd.io加进来，确保所有CRI工具都通过包管理器安装
+      # 加上containerd-ctr是为了确保ctr命令一定存在
+      ansible.builtin.dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes # 安装前先更新dnf缓存
+
+    - name: Start and enable Docker service
+      # 使用systemd模块来管理服务
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: yes
