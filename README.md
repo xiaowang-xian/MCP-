@@ -25,16 +25,16 @@ MCP企业级AI智能体平台是一款基于Anthropic MCP（Model Context Protoc
 - Docker/Containerd：容器化与镜像管理
 - Helm：Kubernetes应用包管理
 
-##架构图
+架构图
 ```mermaid
 flowchart TB
-    %% 样式定义：按层级区分颜色，增强可读性
-    classDef userLayer fill:#f9f,stroke:#333,stroke-width:2px,color:#000
-    classDef gatewayLayer fill:#9ff,stroke:#333,stroke-width:2px,color:#000
-    classDef llmLayer fill:#ff9,stroke:#333,stroke-width:2px,color:#000
-    classDef mcpLayer fill:#9f9,stroke:#333,stroke-width:2px,color:#000
-    classDef dataLayer fill:#f99,stroke:#333,stroke-width:2px,color:#000
-    classDef infraLayer fill:#ccc,stroke:#333,stroke-width:2px,color:#000
+    %% 样式定义：纯深色模式高对比度，所有边框、连线、文字全白
+    classDef userLayer fill:#1e293b,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef gatewayLayer fill:#0f172a,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef llmLayer fill:#1e3a5f,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef mcpLayer fill:#064e3b,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef dataLayer fill:#7f1d1d,stroke:#ffffff,stroke-width:2px,color:#ffffff
+    classDef infraLayer fill:#334155,stroke:#ffffff,stroke-width:2px,color:#ffffff
 
     %% ====================== 1. 用户交互层 ======================
     User[用户] --> WebUI[Web UI 交互层]
@@ -75,8 +75,8 @@ flowchart TB
     end
     class K8sCluster,Ansible,ArgoCD,Prometheus,OpenEBS infraLayer
 
-    %% 链路标注（增强可读性）
-    linkStyle 4 stroke:#666,stroke-width:1px,stroke-dasharray:5,5
+    %% 链路标注：纯白色虚线，深色模式下清晰可见
+    linkStyle 4 stroke:#ffffff,stroke-width:1.5px,stroke-dasharray:5,5
     note["MCP 协议核心：解耦 LLM 与数据/工具调用"]
     AIGateway -.-> note
 ```
